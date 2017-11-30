@@ -44,6 +44,7 @@ public class PingServer {
 					System.out.println(sourceIp+":"+sourcePort+" "+data+" ACTION: not sent");
 				}		
 			}
+			System.out.println();
 		}
 	}
 }
