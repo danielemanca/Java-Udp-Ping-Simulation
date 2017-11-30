@@ -4,21 +4,20 @@ import java.io.*;
 public class PingServer {
 	public static void main(String[] args) throws Exception{
 		InetAddress add = InetAddress.getByName("localhost");
-		if(args.length == 0) {
-			System.err.println("ERR Insert Server Port");
-			return;
-		}
-		//lanciare con serverPort = 1992 come spiegato su commento in PingClient
-		int serverPort = Integer.parseInt(args[0]);
+		int serverPort = 1992;
+		byte[] buf = new byte[1024];
+		DatagramPacket dp = new DatagramPacket(buf, buf.length);
 		DatagramSocket ds;
+		
 		try {
 			ds = new DatagramSocket(serverPort);
 		}catch(BindException be) {
-			System.err.println("ERR -arg 0");
+			System.err.println("ERR Port Unavailable");
 			return;
 		}
-		byte[] buf = new byte[1024];
-		DatagramPacket dp = new DatagramPacket(buf, buf.length);
+		
+		
+		
 		while(true) {
 			for(int i=0; i<10; i++) {
 				ds.receive(dp);				
@@ -33,6 +32,7 @@ public class PingServer {
 				int rand = (int) (Math.random()*100);
 				int delay = (int) (Math.random()*300)+1;
 				
+				//Simulates packet loss and packet delay through the net
 				if(rand > 25) {
 					dp.setAddress(add);
 					dp.setPort(sourcePort);
@@ -44,6 +44,7 @@ public class PingServer {
 					System.out.println(sourceIp+":"+sourcePort+" "+data+" ACTION: not sent");
 				}		
 			}
+			System.out.println();
 		}
 	}
 }
