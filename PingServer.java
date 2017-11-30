@@ -32,7 +32,7 @@ public class PingServer {
 				int rand = (int) (Math.random()*100);
 				int delay = (int) (Math.random()*300)+1;
 				
-				//Simulates packet loss
+				//Simulates packet loss and packet delay through the net
 				if(rand > 25) {
 					dp.setAddress(add);
 					dp.setPort(sourcePort);
